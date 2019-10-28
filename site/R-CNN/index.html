@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>R-CNN - picnets</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "R-CNN";
+    var mkdocs_page_input_path = "R-CNN.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> picnets</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">R-CNN</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">论文内容笔记：</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../OverFeat/">OverFeat</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../MulitBox/">MulitBox</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">picnets</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>R-CNN</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p>论文链接：<a href="https://arxiv.org/pdf/1311.2524.pdf">Rich feature hierarchies for accurate object detection and semantic segmentation</a></p>
+<h1 id="_1">论文内容笔记：</h1>
+<p>1、之所以把R-CNN放在第一个，是因为R-CNN对于目标检测是个里程碑的算法，借助CNN良好的特征提取和分类性能，通过RegionProposal方法实现目标检测问题的转化。</p>
+<p>2、在此之前，目标检测的方法是大部分依赖SIFT和HOG。</p>
+<p>3、R-CNN首次显示，与基于类似HOG的简单功能的系统相比，CNN可以在PASCAL VOC上显着提高目标检测性能。</p>
+<p>4、网络具有五个卷积层，具有非常大的接收场（195×195像素）并在输入图像中大步前进（32×32像素）。</p>
+<p>5、本文的第二个主要贡献是表明，在大型辅助数据集（ILSVRC）上进行有监督的预训练，然后在小型数据集（PASCAL）上进行领域特定的微调，是在数据量较大时学习大容量CNN的有效范例。</p>
+<p>6、我们的物体检测系统由三个模块组成：第一个模块生成与类别无关的区域提议，这些提议定义了可用于探测器的候选检测集。 第二个模块是一个大型卷积神经网络，它从每个区域提取一个固定长度的特征向量。 第三个模块是一组特定于类别的线性SVM。</p>
+<p>7、区域提案：方法。示例包括：对象性，选择性搜索，与类别无关的对象提议，约束参数最小割（CPMC），多尺度组合分组和Cires¸an等。<br />
+特征提取：使用Caffe实现，从每个区域建议中提取4096维特征向量。通过将均值减去后的227×227RGB图像通过五个卷积层和两个完全连接的层进行正向传播来计算特征。必须首先将该区域中的图像数据转换为与CNN兼容的形式（其架构要求输入固定227×227像素大小）</p>
+<p>8、测试时间阶段的检测：提取大约2000个区域建议；对每个建议进行变形；通过CNN进行传播；计算特征，对于每个类别使用针对该类别训练的SVM为每个提取的特征向量评分；应用贪婪的非最大抑制计算记分区域（如果该区域的交点重叠（IoU）重叠且得分较高的选定区域大于学习阈值，则拒绝该区域）。</p>
+<p>9、除了将CNN的ImageNet特定于1000路分类层替换为随机初始化的（N + 1）路分类层（其中N是对象类的数量，再加上1作为背景）之外，CNN的体系结构保持不变。对于VOC，N = 20；对于ILSVRC2013，N = 200。<br />
+以0.001（初始预训练速率的1/10）的学习速率开始SGD。<br />
+对32个正窗口（在所有类中）和96个背景窗口进行统一采样，以构建大小为128的微型批处理。</p>
+<p>10、PASCAL VOC 2010-12上的结果是在mAP方面实现了很大的提高，从35.1％提高到了53.7％，而且还快得多<br />
+ILSVRC2013 detection的结果是R-CNN的mAP为31.4％，大大超过了OverFeat的第二佳结果24.3％。</p>
+<p>11、挑选出网络中的一个特定单元（功能），并像使用它本身就是对象检测器一样使用它。</p>
+<p>12、可视化来自pool，pool是网络第五个也是最后一个卷积层的最大池输出。 pool功能图为6×6×256 = 9216维。忽略边界效应，每个pool单元在原始227×227像素输入中具有195×195像素的接收场。中央pool的视野几乎是全局的，而靠近边缘的泳池则具有较小的固定支撑。  </p>
+<p>13、最后两层总结如下：fc层已完全连接到pool。为了计算特征，它会将4096×9216权重矩阵乘以pool特征图（重塑为9216维向量），然后添加一个偏差向量。该中间矢量是逐分量半波整流的（x←max（0，x））。
+fc层是网络的最后一层。它是通过将fc计算的特征乘以4096×4096权重矩阵并类似地添加一个偏置矢量并应用半波整流来实现的。</p>
+<p>14、带有O-Net的RCNN明显优于带有TNet的R-CNN，将mAP从58.5％提高到66.0％。但是，在计算时间方面存在相当大的缺陷，O-Net的前向传递比T-Net花费大约7倍的时间。</p>
+<p>15、从val集中随机采样每个图像，并显示所有检测器的所有检测结果，其精度均大于0.5。</p>
+<p>16、ILSVRC2013检测数据集分为三组：训练（395,918），val（20,121）和测试（40,152），其中每组中的图像数都用括号括起来。</p>
+<p>17、总体策略是严重依赖val集，并使用一些火车图像作为积极实例的辅助来源。 val上，选择性搜索平均每幅图像产生2403个区域提议，所有地面真相边界框的召回率达到91.6％（阈值为0.5 IoU）。召回率明显低于PASCAL，后者约为98％，表明在区域提案阶段仍有很大的改进空间。</p>
+<p>18、R-CNN中的三个过程需要训练数据：（1）CNN微调，（2）检测器SVM训练和，（3）边界框回归器训练。</p>
+<p>代码地址：<a href="https://github.com/rbgirshick/rcnn">https://github.com/rbgirshick/rcnn</a>（注意代码已经不再维护）</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../OverFeat/" class="btn btn-neutral float-right" title="OverFeat">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../OverFeat/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
