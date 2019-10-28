@@ -1,3 +1,7 @@
 site_name: picnets
+pages:
+- Home: index.md
+- R-CNN: R-CNN.md
+- OverFeat: OverFeat.md
+- MulitBox: MulitBox.md
 theme: readthedocs
-
